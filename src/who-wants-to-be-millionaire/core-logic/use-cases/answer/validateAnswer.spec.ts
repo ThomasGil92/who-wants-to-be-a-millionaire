@@ -29,7 +29,7 @@ describe('Answer validation', () => {
             initialState = store.getState();
         });
 
-        it('should fire winning action when answer is correct', async () => {
+        it('should validate the answer', async () => {
             questionGateway.setValidatedAnswer('1', 'A', true);
 
             await store.dispatch(validateAnswer('A'));
@@ -41,6 +41,12 @@ describe('Answer validation', () => {
                 },
             });
         });
+
+        /*it('should not validate any answer twice', () => {
+            store.dispatch(validateAnswer.pending('', 'A'));
+            store.dispatch(validateAnswer('A'));
+            expect(questionGateway.validationHaveBeenCalled).toBe(false);
+        });*/
 
     });
 

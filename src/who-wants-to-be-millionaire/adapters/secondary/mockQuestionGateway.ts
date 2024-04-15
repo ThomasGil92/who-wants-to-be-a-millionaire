@@ -4,17 +4,20 @@ import {AnswerLetter, Question, ValidatedAnswer} from "../../core-logic/use-case
 export class MockQuestionGateway implements QuestionGateway {
     question: Question | undefined = undefined;
     private _isValidatedAnswer: Record<string, boolean> = {};
+    validationHaveBeenCalled = false;
 
     async retrieveQuestion(): Promise<Question> {
         return this.question!;
     }
 
     async validate(questionId: string, answerLetter: AnswerLetter): Promise<ValidatedAnswer> {
+        this.validationHaveBeenCalled = true;
         return this._isValidatedAnswer[questionId + '_' + answerLetter];
     }
 
     setValidatedAnswer(questionId: string, answerLetter: AnswerLetter, validated: boolean) {
         this._isValidatedAnswer[questionId + '_' + answerLetter] = validated;
     }
+
 }
 

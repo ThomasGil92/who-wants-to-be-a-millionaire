@@ -3,6 +3,7 @@ import {AppState} from "./appState";
 import {QuestionGateway} from "../core-logic/gateways/questionGateway.ts";
 import {questionRetrievalReducer as questionRetrieval} from "../core-logic/reducers/questionRetrieval.reducer.ts";
 import {validatedAnswer} from "../core-logic/reducers/answerValidation.reducer.ts";
+import {pyramid} from "../core-logic/reducers/pyramid.reducer.ts";
 import {useDispatch, useSelector} from "react-redux";
 
 export type Gateways = {
@@ -13,7 +14,8 @@ export const initReduxStore = (gateways?: Partial<Gateways>) => {
     return configureStore({
         reducer: {
             questionRetrieval,
-            validatedAnswer
+            validatedAnswer,
+            pyramid
         },
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware({

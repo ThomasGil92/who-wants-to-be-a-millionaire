@@ -6,7 +6,12 @@ export interface AppState {
     };
     validatedAnswer: {
         valid: boolean | null;
+        validating: 'idle' | 'pending' | 'fulfilled';
     };
+    pyramid: {
+        currentStep: number;
+        steps: number[];
+    }
 }
 
 export type QuestionState = Question;
