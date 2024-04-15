@@ -21,12 +21,12 @@ export const CurrentQuestion = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if(!validatedAnswer)
-            return;
-        if (validatedAnswer.valid) {
-            alert('Correct answer!')
-        } else
-            alert('Incorrect answer!')
+        if (validatedAnswer.valid !== null) {
+            if(validatedAnswer.valid)
+                alert('Correct answer!');
+            else
+                alert('Wrong answer!');
+        }
     }, [dispatch, validatedAnswer]);
 
     const onGivenAnswer = async (answer: AnswerLetter) => {

@@ -5,8 +5,8 @@ export interface AppState {
         data: QuestionState | null;
     };
     validatedAnswer: {
-        valid: boolean;
-    } | null;
+        valid: boolean | null;
+    };
 }
 
 export type QuestionState = Question;
