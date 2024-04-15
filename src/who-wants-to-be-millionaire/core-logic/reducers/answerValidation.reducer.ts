@@ -9,7 +9,7 @@ export const validatedAnswer = createReducer(initialState, (builder) => {
         return {
             valid: action.payload,
             validating: 'fulfilled',
-            validationLocked: false
+            validationLocked: true
         };
     }).addCase(lockValidationAction, (state) => {
         return {

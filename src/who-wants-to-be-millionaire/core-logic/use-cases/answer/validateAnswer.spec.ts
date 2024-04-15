@@ -40,7 +40,7 @@ describe('Answer validation', () => {
                 validatedAnswer: {
                     valid: true,
                     validating: 'fulfilled',
-                    validationLocked: false,
+                    validationLocked: true,
                 },
             });
         });
