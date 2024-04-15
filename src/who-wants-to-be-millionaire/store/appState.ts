@@ -6,7 +6,7 @@ export interface AppState {
     };
     validatedAnswer: {
         valid: boolean;
-    }
+    } | null;
 }
 
 export type QuestionState = Question;

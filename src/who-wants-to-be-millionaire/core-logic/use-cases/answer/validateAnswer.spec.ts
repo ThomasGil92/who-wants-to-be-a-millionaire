@@ -17,7 +17,8 @@ describe('Answer validation', () => {
 
     it('should not have an answer before the game starts', () => {
         expect(store.getState()).toEqual({
-            ...initialState
+            ...initialState,
+            validatedAnswer: null
         });
     });
 
