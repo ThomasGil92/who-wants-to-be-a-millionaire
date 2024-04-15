@@ -7,3 +7,5 @@ export interface Question {
 export type AnswerLabel = string;
 export type AnswerLetter = 'A' | 'B' | 'C' | 'D';
 export type Answers = Record<AnswerLetter, AnswerLabel>;
+
+export type ValidatedAnswer = boolean;

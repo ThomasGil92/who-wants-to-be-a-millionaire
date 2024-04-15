@@ -36,10 +36,8 @@ describe('Question retrieval', () => {
     const expectRetrievedQuestion = (
         expectedQuestion: Question | null,
     ) => {
-        expect(store.getState()).toEqual({
-            questionRetrieval: {
-                data: expectedQuestion,
-            },
+        expect(store.getState().questionRetrieval).toEqual({
+            data: expectedQuestion,
         });
     };
 

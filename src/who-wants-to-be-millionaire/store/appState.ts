@@ -4,6 +4,9 @@ export interface AppState {
     questionRetrieval: {
         data: QuestionState | null;
     };
+    validatedAnswer: {
+        valid: boolean;
+    }
 }
 
 export type QuestionState = Question;

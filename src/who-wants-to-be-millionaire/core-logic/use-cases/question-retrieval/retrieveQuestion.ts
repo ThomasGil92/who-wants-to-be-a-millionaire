@@ -7,7 +7,7 @@ import {Gateways} from "../../../store/reduxStore.ts";
         dispatch(questionRetrievedAction(question));
     };*/
 
-export const retrieveQuestion = createAsyncThunk<Question, void, {extra: Gateways}>(
+export const retrieveQuestion = createAsyncThunk<Question, void, { extra: Gateways }>(
     'questionRetrieval',
     async (_, {extra: {questionGateway}}) => {
         return questionGateway.retrieveQuestion();
