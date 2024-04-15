@@ -3,8 +3,8 @@ import {AppState} from "./appState";
 import {QuestionGateway} from "../core-logic/gateways/questionGateway.ts";
 import {questionRetrievalReducer as questionRetrieval} from "../core-logic/reducers/questionRetrieval.reducer.ts";
 import {validatedAnswer} from "../core-logic/reducers/answerValidation.reducer.ts";
-import {pyramid} from "../core-logic/reducers/pyramid.reducer.ts";
 import {useDispatch, useSelector} from "react-redux";
+import {pyramid} from "../core-logic/reducers/pyramid.reducer.ts";
 
 export type Gateways = {
     questionGateway: QuestionGateway;

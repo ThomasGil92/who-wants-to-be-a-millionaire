@@ -1,6 +1,6 @@
 import {initReduxStore, ReduxStore} from "../../../store/reduxStore.ts";
 import {MockQuestionGateway} from "../../../adapters/secondary/mockQuestionGateway.ts";
-import {validateAnswer} from "./validateAnswer.ts";
+import {lockValidationAction, validateAnswer} from "./validateAnswer.ts";
 import {AppState} from "../../../store/appState.ts";
 import {retrieveQuestion} from "../question-retrieval/retrieveQuestion.ts";
 
@@ -18,7 +18,7 @@ describe('Answer validation', () => {
     it('should not have an answer before the game starts', () => {
         expect(store.getState()).toEqual({
             ...initialState,
-            validatedAnswer: {valid: null}
+            validatedAnswer: {valid: null, validating: 'idle', validationLocked: false},
         });
     });
 
@@ -36,17 +36,28 @@ describe('Answer validation', () => {
 
             expect(store.getState()).toEqual({
                 ...initialState,
+                pyramid: store.getState().pyramid,
                 validatedAnswer: {
                     valid: true,
+                    validating: 'fulfilled',
+                    validationLocked: false,
                 },
             });
         });
 
-        /*it('should not validate any answer twice', () => {
-            store.dispatch(validateAnswer.pending('', 'A'));
+        it('should not validate any answer twice', () => {
+            store.dispatch(lockValidationAction());
             store.dispatch(validateAnswer('A'));
+            expect(store.getState()).toEqual({
+                ...initialState,
+                validatedAnswer: {
+                    valid: null,
+                    validating: 'pending',
+                    validationLocked: true,
+                },
+            });
             expect(questionGateway.validationHaveBeenCalled).toBe(false);
-        });*/
+        });
 
     });
 

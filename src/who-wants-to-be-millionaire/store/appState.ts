@@ -7,6 +7,7 @@ export interface AppState {
     validatedAnswer: {
         valid: boolean | null;
         validating: 'idle' | 'pending' | 'fulfilled';
+        validationLocked: boolean;
     };
     pyramid: {
         currentStep: number;
