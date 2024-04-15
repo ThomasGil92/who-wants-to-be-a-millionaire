@@ -9,7 +9,13 @@ import {Provider} from 'react-redux';
 const questionGateway = new StubQuestionGateway();
 questionGateway.question = {
     id: '123abc',
-    label: 'What is the capital of France?'
+    label: 'What is the capital of France?',
+    answers: {
+        A: 'Paris',
+        B: 'London',
+        C: 'Berlin',
+        D: 'Madrid',
+    }
 };
 
 const store = initReduxStore({

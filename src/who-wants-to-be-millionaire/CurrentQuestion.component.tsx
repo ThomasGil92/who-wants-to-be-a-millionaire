@@ -24,7 +24,7 @@ export const CurrentQuestion = () => {
             <Countdown/>
             {question && <>
                 <QuestionTitle title={question.label}/>
-                <PossibleAnswers/>
+                <PossibleAnswers answers={question.answers}/>
             </>}
         </div>
     );
