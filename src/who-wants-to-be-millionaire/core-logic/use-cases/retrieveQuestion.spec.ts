@@ -1,34 +1,47 @@
-import {QuestionGateway, retrieveQuestion} from "./retrieveQuestion.ts";
+import {retrieveQuestion} from "./retrieveQuestion.ts";
 import {Question} from "./question.ts";
-import axios from "axios";
-import {vi} from 'vitest';
-
-class StubQuestionGateway implements QuestionGateway {
-
-    question: Question | undefined = undefined;
-
-    async retrieveQuestion(): Promise<Question> {
-        return this.question!;
-    }
-}
+import {StubQuestionGateway} from "../../adapters/secondary/stubQuestionGateway.ts";
+import {AppState} from "../../store/appState.ts";
+import {Gateways, initReduxStore, ReduxStore} from "../../store/reduxStore.ts";
 
 describe('Question retrieval', () => {
 
-    let _retrieveQuestion: ReturnType<typeof retrieveQuestion>;
+    let store: ReduxStore;
     let questionGateway: StubQuestionGateway;
+    let initialState: AppState;
 
     beforeEach(() => {
         questionGateway = new StubQuestionGateway();
-        _retrieveQuestion = retrieveQuestion(questionGateway);
+        const gateways: Gateways = {
+            questionGateway,
+        };
+        store = initReduxStore(gateways);
+        initialState = store.getState();
     });
 
-    it('should retrieve a question', async () => {
+    it("should not have retrieved any question before the game starts", () => {
+        expectRetrievedQuestion(null);
+    });
+
+    it('should retrieve a question as soon as the game starts', async () => {
         const currentQuestion = {
             id: '1',
             label: 'What is the capital of France?',
         };
         questionGateway.question = currentQuestion;
-        expect(await _retrieveQuestion()).toEqual<Question>(currentQuestion);
+        await store.dispatch(retrieveQuestion());
+        expectRetrievedQuestion(currentQuestion);
     });
+
+    const expectRetrievedQuestion = (
+        expectedQuestion: Question | null,
+    ) => {
+        expect(store.getState()).toEqual({
+            ...initialState,
+            questionRetrieval: {
+                data: expectedQuestion,
+            },
+        });
+    };
 
 });
