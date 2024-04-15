@@ -14,18 +14,23 @@ export const CurrentQuestion = () => {
     const question = useAppSelector(
         state => state.questionRetrieval.data,
     );
-    const validated = useAppSelector(state => state.validatedAnswer.valid);
+    const validatedAnswer = useAppSelector(state => state.validatedAnswer);
 
     useEffect(() => {
         void dispatch(retrieveQuestion());
     }, [dispatch]);
 
+    useEffect(() => {
+        if(!validatedAnswer)
+            return;
+        if (validatedAnswer.valid) {
+            alert('Correct answer!')
+        } else
+            alert('Incorrect answer!')
+    }, [dispatch, validatedAnswer]);
+
     const onGivenAnswer = async (answer: AnswerLetter) => {
         await dispatch(validateAnswer(answer));
-        if(validated)
-            alert("Correct answer!")
-        else
-            alert("Wrong answer!")
     }
 
     return (
