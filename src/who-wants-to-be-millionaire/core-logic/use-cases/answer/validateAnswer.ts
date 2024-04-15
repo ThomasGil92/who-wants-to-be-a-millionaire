@@ -1,10 +1,9 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import {ValidatedAnswer} from "../question-retrieval/question.ts";
-import {Gateways} from "../../../store/reduxStore.ts";
+import {AnswerLetter, ValidatedAnswer} from "../question-retrieval/question.ts";
+import {createAppAsyncThunk} from "../createAppAsyncThunk.ts";
 
-export const validateAnswer = createAsyncThunk<ValidatedAnswer, void, { extra: Gateways }>(
+export const validateAnswer = createAppAsyncThunk<ValidatedAnswer, AnswerLetter>(
     'answerValidation',
-    async (_, {extra: {questionGateway}}) => {
-        return questionGateway.validate();
+    async (answerLetter, {getState, extra: {questionGateway}}) => {
+        return questionGateway.validate(getState().questionRetrieval.data?.id!, answerLetter);
     }
 );

@@ -1,5 +1,5 @@
 import {QuestionGateway} from "../../core-logic/gateways/questionGateway.ts";
-import {Question, ValidatedAnswer} from "../../core-logic/use-cases/question-retrieval/question.ts";
+import {AnswerLetter, Question, ValidatedAnswer} from "../../core-logic/use-cases/question-retrieval/question.ts";
 
 export class StubQuestionGateway implements QuestionGateway {
     question: Question | undefined = undefined;
@@ -9,8 +9,9 @@ export class StubQuestionGateway implements QuestionGateway {
         return this.question!;
     }
 
-    async validate(): Promise<ValidatedAnswer> {
-        return this.isValidatedAnswer
+    async validate(questionId: string, answerLetter: AnswerLetter): Promise<ValidatedAnswer> {
+        return this.isValidatedAnswer;
     }
+
 }
 

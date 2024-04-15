@@ -1,8 +1,8 @@
-import {Question, ValidatedAnswer} from "../use-cases/question-retrieval/question.ts";
+import {AnswerLetter, Question, ValidatedAnswer} from "../use-cases/question-retrieval/question.ts";
 
 export interface QuestionGateway {
     retrieveQuestion(): Promise<Question>;
 
-    validate(): Promise<ValidatedAnswer>;
+    validate(questionId: string, answerLetter: AnswerLetter): Promise<ValidatedAnswer>;
 }
 

@@ -2,15 +2,18 @@ import {retrieveQuestion} from "./retrieveQuestion.ts";
 import {Question} from "./question.ts";
 import {StubQuestionGateway} from "../../../adapters/secondary/stubQuestionGateway.ts";
 import {initReduxStore, ReduxStore} from "../../../store/reduxStore.ts";
+import {AppState} from "../../../store/appState.ts";
 
 describe('Question retrieval', () => {
 
     let store: ReduxStore;
     let questionGateway: StubQuestionGateway;
+    let initialState: AppState;
 
     beforeEach(() => {
         questionGateway = new StubQuestionGateway();
         store = initReduxStore({questionGateway});
+        initialState = store.getState();
     });
 
     it("should not have retrieved any question before the game starts", () => {
@@ -36,8 +39,11 @@ describe('Question retrieval', () => {
     const expectRetrievedQuestion = (
         expectedQuestion: Question | null,
     ) => {
-        expect(store.getState().questionRetrieval).toEqual({
-            data: expectedQuestion,
+        expect(store.getState()).toEqual({
+            ...initialState,
+           questionRetrieval: {
+                data: expectedQuestion,
+           },
         });
     };
 
