@@ -1,36 +1,46 @@
 import {initReduxStore, ReduxStore} from "../../../store/reduxStore.ts";
-import {StubQuestionGateway} from "../../../adapters/secondary/stubQuestionGateway.ts";
+import {MockQuestionGateway} from "../../../adapters/secondary/mockQuestionGateway.ts";
 import {validateAnswer} from "./validateAnswer.ts";
 import {AppState} from "../../../store/appState.ts";
 import {retrieveQuestion} from "../question-retrieval/retrieveQuestion.ts";
 
 describe('Answer validation', () => {
     let store: ReduxStore;
-    let questionGateway: StubQuestionGateway;
+    let questionGateway: MockQuestionGateway;
     let initialState: AppState;
 
     beforeEach(() => {
-        questionGateway = new StubQuestionGateway();
+        questionGateway = new MockQuestionGateway();
         store = initReduxStore({questionGateway});
-        store.dispatch(retrieveQuestion.fulfilled(currentQuestion, 'requestId'));
         initialState = store.getState();
     });
 
     it('should not have an answer before the game starts', () => {
-        const state = store.getState().validatedAnswer
-        expect(state.valid).toEqual(false);
+        expect(store.getState()).toEqual({
+            ...initialState
+        });
     });
 
-    it('should fire winning action when answer is correct', async () => {
-        questionGateway.isValidatedAnswer = true;
-        await store.dispatch(validateAnswer('A'))
+    describe('The game has started', () => {
 
-        expect(store.getState()).toEqual({
-            ...initialState,
-            validatedAnswer: {
-                valid: true,
-            },
+        beforeEach(() => {
+            store.dispatch(retrieveQuestion.fulfilled(currentQuestion, 'requestId'));
+            initialState = store.getState();
         });
+
+        it('should fire winning action when answer is correct', async () => {
+            questionGateway.setValidatedAnswer('1', 'A', true);
+
+            await store.dispatch(validateAnswer('A'));
+
+            expect(store.getState()).toEqual({
+                ...initialState,
+                validatedAnswer: {
+                    valid: true,
+                },
+            });
+        });
+
     });
 
     const currentQuestion = {

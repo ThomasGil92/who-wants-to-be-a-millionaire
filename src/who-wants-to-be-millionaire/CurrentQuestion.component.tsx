@@ -5,6 +5,8 @@ import {Countdown} from "./Countdown.tsx";
 import {useEffect} from "react";
 import {retrieveQuestion} from "./core-logic/use-cases/question-retrieval/retrieveQuestion.ts";
 import {useAppDispatch, useAppSelector} from "./store/reduxStore.ts";
+import {validateAnswer} from "./core-logic/use-cases/answer/validateAnswer.ts";
+import {AnswerLetter} from "./core-logic/use-cases/question-retrieval/question.ts";
 
 export const CurrentQuestion = () => {
 
@@ -12,10 +14,19 @@ export const CurrentQuestion = () => {
     const question = useAppSelector(
         state => state.questionRetrieval.data,
     );
+    const validated = useAppSelector(state => state.validatedAnswer.valid);
 
     useEffect(() => {
         void dispatch(retrieveQuestion());
     }, [dispatch]);
+
+    const onGivenAnswer = async (answer: AnswerLetter) => {
+        await dispatch(validateAnswer(answer));
+        if(validated)
+            alert("Correct answer!")
+        else
+            alert("Wrong answer!")
+    }
 
     return (
         <div>
@@ -24,7 +35,7 @@ export const CurrentQuestion = () => {
             <Countdown/>
             {question && <>
                 <QuestionTitle title={question.label}/>
-                <PossibleAnswers answers={question.answers}/>
+                <PossibleAnswers answers={question.answers} onGivenAnswer={onGivenAnswer}/>
             </>}
         </div>
     );
