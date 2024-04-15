@@ -8,7 +8,7 @@ describe('Pyramid update', () => {
     let initialState: AppState;
 
     beforeEach(() => {
-        store = initReduxStore();
+        store = initReduxStore({}, [0, 10, 20]);
         initialState = store.getState();
     });
 

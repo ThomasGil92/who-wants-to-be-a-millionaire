@@ -10,12 +10,13 @@ export type Gateways = {
     questionGateway: QuestionGateway;
 };
 
-export const initReduxStore = (gateways?: Partial<Gateways>) => {
+export const initReduxStore = (gateways?: Partial<Gateways>,
+                               pyramidSteps: number[] = []) => {
     return configureStore({
         reducer: {
             questionRetrieval,
             validatedAnswer,
-            pyramid
+            pyramid: pyramid(pyramidSteps)
         },
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware({

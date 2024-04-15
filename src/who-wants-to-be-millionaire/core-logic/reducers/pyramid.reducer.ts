@@ -1,12 +1,12 @@
 import {createReducer} from "@reduxjs/toolkit";
 import {validateAnswer} from "../use-cases/answer/validateAnswer.ts";
 
-const initialState = {
+const initialState = (steps: number[]) => ({
     currentStep: 0,
-    steps: [0, 10, 20]
-};
+    steps
+});
 
-export const pyramid = createReducer(initialState, (builder) => {
+export const pyramid = (steps: number[]) => createReducer(initialState(steps), (builder) => {
     builder.addCase(validateAnswer.fulfilled, (state) => {
         return {
             ...state,

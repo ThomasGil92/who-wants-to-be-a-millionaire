@@ -19,9 +19,7 @@ questionGateway.question = {
 };
 questionGateway.setValidatedAnswer('123abc', 'A', true);
 
-const store = initReduxStore({
-    questionGateway
-});
+const store = initReduxStore({questionGateway}, [0, 10000000]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
