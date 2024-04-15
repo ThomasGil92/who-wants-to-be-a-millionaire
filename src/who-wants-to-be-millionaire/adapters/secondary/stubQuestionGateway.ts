@@ -1,5 +1,5 @@
 import {QuestionGateway} from "../../core-logic/gateways/questionGateway.ts";
-import {Question} from "../../core-logic/use-cases/question.ts";
+import {Question} from "../../core-logic/use-cases/question-retrieval/question.ts";
 
 export class StubQuestionGateway implements QuestionGateway {
 

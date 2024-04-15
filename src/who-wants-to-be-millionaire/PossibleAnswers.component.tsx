@@ -1,4 +1,4 @@
-import {Answers} from "./core-logic/use-cases/question.ts";
+import {Answers} from "./core-logic/use-cases/question-retrieval/question.ts";
 import {FC} from "react";
 
 interface Props {

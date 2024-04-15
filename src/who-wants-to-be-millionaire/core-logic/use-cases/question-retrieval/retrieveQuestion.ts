@@ -1,6 +1,6 @@
 import {Question} from "./question.ts";
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {Gateways} from "../../store/reduxStore.ts";
+import {Gateways} from "../../../store/reduxStore.ts";
 
 /*export const retrieveQuestion = async (dispatch: ReduxStore['dispatch'], questionGateway: QuestionGateway) =>   {
     const question = await questionGateway.retrieveQuestion();

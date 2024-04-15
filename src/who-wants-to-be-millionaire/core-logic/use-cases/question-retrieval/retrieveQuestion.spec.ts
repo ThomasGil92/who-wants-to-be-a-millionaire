@@ -1,7 +1,7 @@
 import {retrieveQuestion} from "./retrieveQuestion.ts";
 import {Question} from "./question.ts";
-import {StubQuestionGateway} from "../../adapters/secondary/stubQuestionGateway.ts";
-import {initReduxStore, ReduxStore} from "../../store/reduxStore.ts";
+import {StubQuestionGateway} from "../../../adapters/secondary/stubQuestionGateway.ts";
+import {initReduxStore, ReduxStore} from "../../../store/reduxStore.ts";
 
 describe('Question retrieval', () => {
 

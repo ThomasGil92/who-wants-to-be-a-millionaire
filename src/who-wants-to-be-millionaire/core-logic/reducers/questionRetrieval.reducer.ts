@@ -1,6 +1,6 @@
 import {AppState} from "../../store/appState.ts";
 import {createReducer} from "@reduxjs/toolkit";
-import {retrieveQuestion} from "../use-cases/retrieveQuestion.ts";
+import {retrieveQuestion} from "../use-cases/question-retrieval/retrieveQuestion.ts";
 
 const initialState: AppState["questionRetrieval"] = {data: null};
 
