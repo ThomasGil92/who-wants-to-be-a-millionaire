@@ -26,16 +26,35 @@ describe('Pyramid update', () => {
 
     });
 
+    describe('After a correct answer validation', () => {
 
-    it('pyramid should increase by one step each time', () => {
-        store.dispatch(validateAnswer.fulfilled(true, '123abc', 'A', 'requestId'));
-        initialState = store.getState();
-        expect(store.getState()).toEqual({
-            ...initialState,
-            pyramid: {
-                currentStep: 10,
-                steps: [0, 10, 20]
-            }
+        it('pyramid should increase by one step each time', () => {
+            store.dispatch(validateAnswer.fulfilled(true, '123abc', 'A', 'requestId'));
+            initialState = store.getState();
+            expect(store.getState()).toEqual({
+                ...initialState,
+                pyramid: {
+                    currentStep: 10,
+                    steps: [0, 10, 20]
+                }
+            });
+        });
+
+    });
+
+    describe('After two correct answer validations', () => {
+
+        it('pyramid should have increased by one two steps', () => {
+            store.dispatch(validateAnswer.fulfilled(true, '123abc', 'A', 'requestId'));
+            store.dispatch(validateAnswer.fulfilled(true, '123abc', 'A', 'requestId'));
+            initialState = store.getState();
+            expect(store.getState()).toEqual({
+                ...initialState,
+                pyramid: {
+                    currentStep: 20,
+                    steps: [0, 10, 20]
+                }
+            });
         });
     });
 

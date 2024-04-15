@@ -8,9 +8,10 @@ const initialState = (steps: number[]) => ({
 
 export const pyramid = (steps: number[]) => createReducer(initialState(steps), (builder) => {
     builder.addCase(validateAnswer.fulfilled, (state) => {
+        const nextIndex = steps.indexOf(state.currentStep) + 1;
         return {
             ...state,
-            currentStep: 10
+            currentStep: steps[nextIndex],
         };
     });
 });
