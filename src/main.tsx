@@ -5,8 +5,14 @@ import './index.css'
 import {initReduxStore} from "./who-wants-to-be-millionaire/store/reduxStore.ts";
 import {MockQuestionGateway} from "./who-wants-to-be-millionaire/adapters/secondary/mockQuestionGateway.ts";
 import {Provider} from 'react-redux';
+import {
+    QuizApiQuestionGateway
+} from "./who-wants-to-be-millionaire/adapters/secondary/real-quiz-api/quizApiQuestionGateway.ts";
+import {
+    AxiosQuestionRetriever
+} from "./who-wants-to-be-millionaire/adapters/secondary/real-quiz-api/axiosQuestionRetriever.ts";
 
-const questionGateway = new MockQuestionGateway();
+/*const questionGateway = new MockQuestionGateway();
 questionGateway.question = {
     id: '123abc',
     label: 'What is the capital of France?',
@@ -17,7 +23,9 @@ questionGateway.question = {
         D: 'Madrid',
     }
 };
-questionGateway.setValidatedAnswer('123abc', 'A', true);
+questionGateway.setValidatedAnswer('123abc', 'A', true);*/
+
+const questionGateway = new QuizApiQuestionGateway(new AxiosQuestionRetriever());
 
 const store = initReduxStore({questionGateway}, [
     0,      // €0
