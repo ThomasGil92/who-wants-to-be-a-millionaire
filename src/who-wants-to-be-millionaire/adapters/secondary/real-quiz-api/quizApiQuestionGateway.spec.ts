@@ -17,7 +17,8 @@ describe("Quiz Api Question Gateway", () => {
     describe('Accepted question format', () => {
         it('The question shows 4 answers, for a single accepted - should accept it', async () => {
             questionRetriever.questions = [acceptableQuestionFromApi];
-            await expectRetrievedQuestion({
+            const retrievedQuestion = await questionGateway.retrieveQuestion();
+            expectRetrievedQuestion(retrievedQuestion,{
                 id: "1",
                 label: "Why does a developer use an IDE?",
                 answers: {
@@ -36,7 +37,25 @@ describe("Quiz Api Question Gateway", () => {
             const nonAcceptableQuestionFromApi: QuizApiQuestion =
                 {...acceptableQuestionFromApi, answers: {...acceptableQuestionFromApi.answers, "answer_e": 'Other answer' }};
             questionRetriever.questions = [nonAcceptableQuestionFromApi, acceptableQuestionFromApi];
-            await expectRetrievedQuestion({
+            const retrievedQuestion = await questionGateway.retrieveQuestion();
+            expectRetrievedQuestion(retrievedQuestion,{
+                id: "1",
+                label: "Why does a developer use an IDE?",
+                answers: {
+                    A: "To write code",
+                    B: "To have an idea",
+                    C: "To dance",
+                    D: "To sell code",
+                },
+            });
+        });
+
+        it('should not accept questions with multiples choices', async () => {
+            const nonAcceptableQuestionFromApi: QuizApiQuestion =
+                {...acceptableQuestionFromApi, id: 99, multiple_correct_answers: "true"};
+            questionRetriever.questions = [nonAcceptableQuestionFromApi, acceptableQuestionFromApi];
+            const retrievedQuestion = await questionGateway.retrieveQuestion();
+            expectRetrievedQuestion(retrievedQuestion,{
                 id: "1",
                 label: "Why does a developer use an IDE?",
                 answers: {
@@ -50,8 +69,17 @@ describe("Quiz Api Question Gateway", () => {
 
     });
 
-    const expectRetrievedQuestion = async (expectedQuestion: Question) => {
-        expect(await questionGateway.retrieveQuestion()).toEqual<Question>(
+    describe('Answer validation', () => {
+        it('should validate the retrieved question successfully', async () => {
+            questionRetriever.questions = [acceptableQuestionFromApi];
+            await questionGateway.retrieveQuestion();
+            expect(await questionGateway.validate("1", "A")).toBe(true);
+        });
+
+    })
+
+    const expectRetrievedQuestion = (actualQuestion: Question, expectedQuestion: Question) => {
+        expect(actualQuestion).toEqual<Question>(
             expectedQuestion);
     }
 });

@@ -4,6 +4,9 @@ import {QuizApiQuestion} from "./quizApiQuestion.ts";
 import {QuestionRetriever} from "./questionRetriever.ts";
 
 export class QuizApiQuestionGateway implements QuestionGateway {
+
+    private _correctAnswer: AnswerLetter;
+
     constructor(private readonly questionRetriever: QuestionRetriever) {
     }
 
@@ -13,7 +16,10 @@ export class QuizApiQuestionGateway implements QuestionGateway {
         do {
             apiQuestion = await this.questionRetriever.nextQuestion();
             nonNullAnswers = this.discardNullAnswers(apiQuestion.answers);
-        } while (Object.keys(nonNullAnswers).length > 4);
+            this._correctAnswer = Object.entries(apiQuestion.correct_answers)
+                .filter(([_, value]) => value === 'true')
+                .map(([key, _]) => key.split('_')[1].toUpperCase() as AnswerLetter)[0];
+        } while (Object.keys(nonNullAnswers).length > 4 || apiQuestion.multiple_correct_answers === 'true');
         return {
             id: apiQuestion.id.toString(),
             label: apiQuestion.question,
@@ -32,7 +38,7 @@ export class QuizApiQuestionGateway implements QuestionGateway {
             }   , {} as Record<string, string>);
     }
 
-    validate(questionId: string, answerLetter: AnswerLetter): Promise<ValidatedAnswer> {
-        return Promise.resolve(undefined);
+    async validate(questionId: string, answerLetter: AnswerLetter): Promise<ValidatedAnswer> {
+        return answerLetter === this._correctAnswer;
     }
 }
