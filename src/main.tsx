@@ -19,7 +19,22 @@ questionGateway.question = {
 };
 questionGateway.setValidatedAnswer('123abc', 'A', true);
 
-const store = initReduxStore({questionGateway}, [0, 10000000]);
+const store = initReduxStore({questionGateway}, [
+    0,      // €0
+    200,    // €200
+    500,    // €500
+    800,    // €800
+    1500,   // €1,500
+    3000,   // €3,000
+    6000,   // €6,000
+    12000,  // €12,000
+    24000,  // €24,000
+    48000,  // €48,000
+    72000,  // €72,000
+    150000, // €150,000
+    300000, // €300,000
+    1000000 // €1,000,000
+]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
