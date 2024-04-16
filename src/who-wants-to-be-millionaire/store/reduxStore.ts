@@ -5,26 +5,32 @@ import {questionRetrievalReducer as questionRetrieval} from "../core-logic/reduc
 import {validatedAnswer} from "../core-logic/reducers/answerValidation.reducer.ts";
 import {useDispatch, useSelector} from "react-redux";
 import {pyramid} from "../core-logic/reducers/pyramid.reducer.ts";
+import {answerValidatedListener} from "../core-logic/use-cases/answer-validated-listener/answerValidatedListener.ts";
 
 export type Gateways = {
     questionGateway: QuestionGateway;
 };
 
 export const initReduxStore = (gateways?: Partial<Gateways>,
-                               pyramidSteps: number[] = []) => {
+                               pyramidSteps: number[] = [],
+                               enableListeners: boolean = false) => {
     return configureStore({
         reducer: {
             questionRetrieval,
             validatedAnswer,
             pyramid: pyramid(pyramidSteps)
         },
-        middleware: (getDefaultMiddleware) =>
-            getDefaultMiddleware({
+        middleware: (getDefaultMiddleware) => {
+            const middleware = getDefaultMiddleware({
                 thunk: {
                     extraArgument: gateways,
                 },
                 serializableCheck: false,
-            }),
+            })
+            if (enableListeners)
+                return middleware.prepend(answerValidatedListener.middleware);
+            return middleware;
+        },
         devTools: true,
     });
 };

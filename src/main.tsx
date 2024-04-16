@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import {initReduxStore} from "./who-wants-to-be-millionaire/store/reduxStore.ts";
-import {MockQuestionGateway} from "./who-wants-to-be-millionaire/adapters/secondary/mockQuestionGateway.ts";
 import {Provider} from 'react-redux';
 import {
     QuizApiQuestionGateway
@@ -42,7 +41,7 @@ const store = initReduxStore({questionGateway}, [
     150000, // €150,000
     300000, // €300,000
     1000000 // €1,000,000
-]);
+], true);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
