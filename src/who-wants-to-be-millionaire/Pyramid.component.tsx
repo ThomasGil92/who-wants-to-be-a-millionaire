@@ -1,5 +1,5 @@
 import {useAppSelector} from "./store/reduxStore.ts";
-import {selectPyramid} from "./core-logic/reducers/pyramid.selectors.ts";
+import {selectPyramid} from "./adapters/primary/react/selectors/pyramid.selectors.ts";
 
 export const Pyramid = () => {
 

@@ -1,4 +1,4 @@
-import {initReduxStore, ReduxStore} from "../../store/reduxStore.ts";
+import {initReduxStore, ReduxStore} from "../../../../store/reduxStore.ts";
 import {selectPyramid} from "./pyramid.selectors.ts";
 
 describe('Pyramid selectors', () => {

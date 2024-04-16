@@ -1,4 +1,4 @@
-import {AppState} from "../../store/appState.ts";
+import {AppState} from "../../../../store/appState.ts";
 import {createSelector} from "@reduxjs/toolkit";
 
 export const selectPyramid = createSelector(
